@@ -19,4 +19,14 @@ body{
     margin-left: 2.5vw;
     float: left;
     height: 100vh;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+#div1 div, #div2 div, #div3 div{   
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 }
