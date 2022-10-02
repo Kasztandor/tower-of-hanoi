@@ -1,4 +1,5 @@
 var body = document.querySelector("body")
+var el
 function randomColor(){
     var color = "";
     for (var i=0; i<6; i++){
@@ -12,10 +13,12 @@ function reloadDragging(){
     })
     document.querySelectorAll(".div").forEach(i=>{
         if (i.childNodes.length>0){
-            document.querySelector(".div").childNodes[document.querySelector(".div").childNodes.length-1].draggable=true
-            console.log(document.querySelector(".div").childNodes[document.querySelector(".div").childNodes.length-1])
+            i.childNodes[i.childNodes.length-1].draggable=true
         }
     })
+}
+function drag(e){
+    ev.dataTransfer.setData("text", ev.target.id);
 }
 function startscreen(){
     body.innerHTML=`
@@ -29,6 +32,17 @@ function startscreen(){
         var checkbox = document.querySelector("#checkbox").checked
         if (!isNaN(number) && number>=3){
             body.innerHTML = '<div id="div1" class="div"></div><div id="div2" class="div"></div><div id="div3" class="div"></div>'
+            document.querySelectorAll(".div").forEach(i => {
+                i.addEventListener("drop", e=>{
+                    reloadDragging()
+                })
+                i.addEventListener("dragover", e=>{
+                    e.preventDefault()
+                    if (i.childNodes.length == 0 || el.id.slice(1) < i.childNodes[i.childNodes.length-1].id.slice(1)){
+                        i.appendChild(el)
+                    }
+                })
+            })
             var towers = [[],[],[]]
             var numbers = []
             for (var i = number-1; i>=0; i--){
@@ -40,10 +54,19 @@ function startscreen(){
             towers.forEach((i, index) => {
                 i.forEach(j => {
                     document.querySelector("#div"+(index+1)).innerHTML+=`<div id="d${j}" style="background-color: #${randomColor()}; 
-                    width: calc(50% + 50% * (${j} / ${numbers.length}));">${checkbox?j+1:""}</div>`
+                    width: calc(50% + 50% * (${j} / ${numbers.length}));" class="block">${checkbox?j+1:""}</div>`
+                })
+            })
+            document.querySelectorAll(".block").forEach(i => {
+                i.addEventListener("dragstart", e=>{
+                    el = e.target
+                })
+                i.addEventListener("drag", e=>{
+                    console.log("dragging")
                 })
             })
         }
+        reloadDragging()
     })
 }
 window.onload = ()=>{startscreen()}

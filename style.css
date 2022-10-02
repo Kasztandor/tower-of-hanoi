@@ -30,3 +30,12 @@ body{
     align-items: center;
     user-select: none;
 }
+div[draggable=true]{
+    cursor: pointer;
+}
+.dragover{
+    width: calc(30vw - 8px) !important;
+    height: calc(100vh - 8px) !important;
+    border: 4px dashed red;
+    margin-bottom: -8px;
+}
