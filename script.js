@@ -61,9 +61,6 @@ function startscreen(){
                 i.addEventListener("dragstart", e=>{
                     el = e.target
                 })
-                i.addEventListener("drag", e=>{
-                    console.log("dragging")
-                })
             })
         }
         reloadDragging()
